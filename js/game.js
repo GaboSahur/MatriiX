@@ -290,6 +290,16 @@ function finalizarPartida() {
     estado.incorrectas;
 
   guardarEnRanking();
+
+  // Aviso desacoplado: game.js no sabe nada de Firebase. Solo emite
+  // un evento con el resultado; js/jugar-cloud.js (un módulo aparte)
+  // lo escucha y decide si sincronizarlo con el ranking global.
+  // Así game.js sigue funcionando solo, sin depender de la nube.
+  document.dispatchEvent(
+    new CustomEvent("numerax:partida-finalizada", {
+      detail: { puntaje: estado.puntaje, nivel: NIVELES[estado.nivelKey].titulo },
+    })
+  );
 }
 
 function guardarEnRanking() {

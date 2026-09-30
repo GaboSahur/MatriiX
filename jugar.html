@@ -20,9 +20,11 @@
       <ul class="nav-links" id="menu-principal">
         <li><a href="index.html" data-page="inicio">Inicio</a></li>
         <li><a href="catalogo.html" data-page="catalogo">Niveles</a></li>
+        <li><a href="ranking.html" data-page="ranking">Ranking</a></li>
         <li><a href="contacto.html" data-page="contacto">Contacto</a></li>
         <li><a href="login.html" data-page="login">Admin</a></li>
       </ul>
+      <div class="nav-account" id="nav-cuenta"></div>
     </div>
   </header>
 
@@ -74,6 +76,7 @@
             <span id="resultado-correctas">0</span> correctas ·
             <span id="resultado-incorrectas">0</span> incorrectas
           </p>
+          <p class="cloud-msg hidden" id="aviso-ranking-cloud"></p>
           <div class="hero-actions" style="justify-content:center;">
             <button class="btn btn-primary" id="btn-jugar-de-nuevo">Jugar de nuevo</button>
             <a href="catalogo.html" class="btn btn-secondary">Elegir otro nivel</a>
@@ -92,6 +95,10 @@
 
   <script src="js/config.js"></script>
   <script src="js/common.js"></script>
+  <script type="module" src="js/firebase-auth.js"></script>
+  <script type="module" src="js/nav-session.js"></script>
   <script src="js/game.js"></script>
+  <script type="module" src="js/firebase-ranking.js"></script>
+  <script type="module" src="js/jugar-cloud.js"></script>
 </body>
 </html>
