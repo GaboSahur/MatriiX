@@ -30,6 +30,14 @@ const firebaseConfig = {
   messagingSenderId: "533802082287",
   appId: "1:533802082287:web:ac5cadece071beec5d601a",
 };
+=======
+  apiKey: "AIzaSyBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  authDomain: "numerax-xxxxx.firebaseapp.com",
+  projectId: "numerax-xxxxx",
+  storageBucket: "numerax-xxxxx.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abc123def456"
+ 02c7f488199d565a4d9ab6b74a99e44cc575a7a8
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
