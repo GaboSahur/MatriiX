@@ -20,13 +20,7 @@
  * -----------------------------------------------------------
  */
 
-const NIVELES = {
-  suma: { titulo: "Sumas", simbolo: "+", min: 2, max: 12 },
-  resta: { titulo: "Restas", simbolo: "−", min: 2, max: 12 },
-  multiplicacion: { titulo: "Multiplicación", simbolo: "×", min: 2, max: 10 },
-  division: { titulo: "División", simbolo: "÷", min: 2, max: 10 },
-  mixto: { titulo: "Desafío mixto", simbolo: "?", min: 2, max: 12 },
-};
+import { CONTENT_LIBRARY } from "./content-library.js";
 
 const DURACION_PARTIDA = 60; // segundos
 
