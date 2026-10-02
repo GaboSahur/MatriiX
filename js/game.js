@@ -2,31 +2,15 @@
  * game.js
  * -----------------------------------------------------------
  * Motor del juego de matemática.
- *
- * "IA personalizada" del proyecto: un sistema de DIFICULTAD
- * ADAPTATIVA basado en reglas (adaptiveEngine). No usa una API
- * externa de IA: analiza el desempeño reciente del jugador
- * (aciertos/errores consecutivos, tiempo de respuesta) y ajusta
- * el nivel de dificultad y el tipo de pista automáticamente,
- * tal como pide la consigna: "Chatbot o generador que conoce
- * el negocio". Acá "el negocio" es el propio juego: conoce el
- * desempeño del alumno y genera ejercicios y pistas a medida.
- *
- * Si más adelante querés conectar un modelo real (por ejemplo
- * la API de Claude) para generar las pistas del tutor en texto
- * libre, el lugar indicado es la función generarPista(): hoy
- * devuelve una pista por reglas, pero se puede reemplazar por
- * un fetch() a tu backend de IA sin tocar el resto del juego.
  * -----------------------------------------------------------
  */
 
 import { CONTENT_LIBRARY } from "./content-library.js";
 
-const DURACION_PARTIDA = 60; // segundos
+const DURACION_PARTIDA = 60;
 
-/** Motor de dificultad adaptativa (la "IA" del proyecto) */
 const adaptiveEngine = {
-  nivelDificultad: 2, // escala 1 (fácil) a 5 (difícil)
+  nivelDificultad: 2,
   rachaAciertos: 0,
   rachaErrores: 0,
 
@@ -49,7 +33,6 @@ const adaptiveEngine = {
   },
 
   factorRango() {
-    // A mayor dificultad, mayor rango de números
     return 1 + (this.nivelDificultad - 1) * 0.6;
   },
 };
@@ -74,9 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function inicializarJuego() {
   const params = new URLSearchParams(window.location.search);
   const nivelKey = params.get("nivel");
-  estado.nivelKey = NIVELES[nivelKey] ? nivelKey : "suma";
 
-  const nivel = NIVELES[estado.nivelKey];
+  estado.nivelKey = CONTENT_LIBRARY[nivelKey] ? nivelKey : "suma";
+
+  const nivel = CONTENT_LIBRARY[estado.nivelKey];
   document.querySelectorAll("[data-nivel-titulo]").forEach((el) => {
     el.textContent = nivel.titulo;
   });
@@ -84,6 +68,7 @@ function inicializarJuego() {
   document
     .getElementById("form-respuesta")
     .addEventListener("submit", manejarRespuesta);
+
   document
     .getElementById("btn-jugar-de-nuevo")
     ?.addEventListener("click", () => window.location.reload());
@@ -125,7 +110,6 @@ function actualizarTimer() {
 }
 
 function generarProblema() {
-  const nivel = NIVELES[estado.nivelKey];
   const operacion =
     estado.nivelKey === "mixto"
       ? ["suma", "resta", "multiplicacion", "division"][
@@ -133,7 +117,7 @@ function generarProblema() {
         ]
       : estado.nivelKey;
 
-  const config = NIVELES[operacion];
+  const config = CONTENT_LIBRARY[operacion];
   const factor = adaptiveEngine.factorRango();
   const min = config.min;
   const max = Math.round(config.max * factor);
@@ -147,14 +131,13 @@ function generarProblema() {
       resultado = a + b;
       break;
     case "resta":
-      if (b > a) [a, b] = [b, a]; // evitar negativos
+      if (b > a) [a, b] = [b, a];
       resultado = a - b;
       break;
     case "multiplicacion":
       resultado = a * b;
       break;
     case "division":
-      // Generamos primero el resultado y el divisor para que sea exacta
       b = aleatorioEntre(min, Math.max(min + 1, Math.round(6 * factor)));
       resultado = aleatorioEntre(min, Math.round(10 * factor));
       a = b * resultado;
@@ -165,13 +148,13 @@ function generarProblema() {
     a,
     b,
     operacion,
-    simbolo: NIVELES[operacion].simbolo,
+    simbolo: CONTENT_LIBRARY[operacion].simbolo,
     resultado,
   };
 
   document.getElementById(
     "expresion"
-  ).textContent = `${a} ${NIVELES[operacion].simbolo} ${b}`;
+  ).textContent = `${a} ${CONTENT_LIBRARY[operacion].simbolo} ${b}`;
 
   const input = document.getElementById("input-respuesta");
   input.value = "";
@@ -218,11 +201,6 @@ function manejarRespuesta(evento) {
   }, esCorrecto ? 500 : 1600);
 }
 
-/**
- * Genera una pista pedagógica según el tipo de operación y los
- * números involucrados. Reemplazable por una llamada a un modelo
- * de IA real (ver comentario al inicio del archivo).
- */
 function generarPista(problema) {
   const { a, b, operacion } = problema;
   switch (operacion) {
@@ -278,20 +256,14 @@ function finalizarPartida() {
   resultado.classList.remove("hidden");
 
   document.getElementById("resultado-puntaje").textContent = estado.puntaje;
-  document.getElementById("resultado-correctas").textContent =
-    estado.correctas;
-  document.getElementById("resultado-incorrectas").textContent =
-    estado.incorrectas;
+  document.getElementById("resultado-correctas").textContent = estado.correctas;
+  document.getElementById("resultado-incorrectas").textContent = estado.incorrectas;
 
   guardarEnRanking();
 
-  // Aviso desacoplado: game.js no sabe nada de Firebase. Solo emite
-  // un evento con el resultado; js/jugar-cloud.js (un módulo aparte)
-  // lo escucha y decide si sincronizarlo con el ranking global.
-  // Así game.js sigue funcionando solo, sin depender de la nube.
   document.dispatchEvent(
     new CustomEvent("numerax:partida-finalizada", {
-      detail: { puntaje: estado.puntaje, nivel: NIVELES[estado.nivelKey].titulo },
+      detail: { puntaje: estado.puntaje, nivel: CONTENT_LIBRARY[estado.nivelKey].titulo },
     })
   );
 }
@@ -309,7 +281,7 @@ function guardarEnRanking() {
   ranking.push({
     nombre,
     puntaje: estado.puntaje,
-    nivel: NIVELES[estado.nivelKey].titulo,
+    nivel: CONTENT_LIBRARY[estado.nivelKey].titulo,
     fecha: new Date().toISOString(),
   });
 
