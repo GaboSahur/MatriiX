@@ -4,17 +4,10 @@
  * Biblioteca centralizada de todos los niveles/dificultades.
  * Define la estructura de cada nivel: operación, rango numérico,
  * descripción, emoji, etc.
- *
- * VENTAJAS:
- * - Agregar nuevos niveles es solo agregar un objeto a CONTENT_LIBRARY
- * - No hay que tocar game.js ni catalogo.html para new features
- * - Datos y lógica separados (Clean Architecture)
- * - Fácil de mockear en tests
  * -----------------------------------------------------------
  */
 
 export const CONTENT_LIBRARY = {
-  // ========== BÁSICOS (nivel inicial) ==========
   suma: {
     id: "suma",
     titulo: "Sumas",
@@ -39,7 +32,6 @@ export const CONTENT_LIBRARY = {
     categoria: "operaciones-basicas",
   },
 
-  // ========== INTERMEDIOS (nivel medio) ==========
   multiplicacion: {
     id: "multiplicacion",
     titulo: "Multiplicación",
@@ -64,7 +56,6 @@ export const CONTENT_LIBRARY = {
     categoria: "operaciones-basicas",
   },
 
-  // ========== AVANZADOS ==========
   mixto: {
     id: "mixto",
     titulo: "Desafío mixto",
@@ -77,7 +68,6 @@ export const CONTENT_LIBRARY = {
     categoria: "desafios",
   },
 
-  // ========== NUEVAS DIFICULTADES (ejemplo) ==========
   potencias: {
     id: "potencias",
     titulo: "Potencias",
@@ -115,20 +105,10 @@ export const CONTENT_LIBRARY = {
   },
 };
 
-/**
- * Obtiene un nivel por ID
- * @param {string} id - El ID del nivel
- * @returns {object|null} Objeto del nivel o null
- */
 export function obtenerNivel(id) {
   return CONTENT_LIBRARY[id] || null;
 }
 
-/**
- * Lista todos los niveles filtrados por categoría (opcional)
- * @param {string} categoria - Opcional: filtra por categoría
- * @returns {array} Array de niveles
- */
 export function listarNiveles(categoria = null) {
   const niveles = Object.values(CONTENT_LIBRARY);
   return categoria
@@ -136,10 +116,6 @@ export function listarNiveles(categoria = null) {
     : niveles;
 }
 
-/**
- * Obtiene los niveles agrupados por categoría (útil para UI)
- * @returns {object} Objeto con categorías como keys y arrays de niveles como values
- */
 export function agruparPorCategoria() {
   const agrupado = {};
   Object.values(CONTENT_LIBRARY).forEach((nivel) => {
@@ -151,11 +127,6 @@ export function agruparPorCategoria() {
   return agrupado;
 }
 
-/**
- * Valida si un nivel existe
- * @param {string} id
- * @returns {boolean}
- */
 export function nivelExiste(id) {
   return id in CONTENT_LIBRARY;
 }
