@@ -30,22 +30,21 @@ import {
  * solo no guarda datos de negocio como puntajes, solo identidad.
  */
 export async function registrarUsuario(nombre, email, password) {
-  const credencial = await createUserWithEmailAndPassword(auth, email, password);
-
-  // El nombre se guarda en el propio perfil de Firebase Auth...
-  await updateProfile(credencial.user, { displayName: nombre.trim() });
-
-  // ...y también en Firestore, junto al resto de sus datos de juego.
-  await setDoc(doc(db, "usuarios", credencial.user.uid), {
-    nombre: nombre.trim(),
-    email: email.trim(),
-    mejorPuntaje: 0,
-    creadoEn: serverTimestamp(),
-  });
-
-  return credencial.user;
+  try {
+    const credencial = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credencial.user, { displayName: nombre.trim() });
+    await setDoc(doc(db, "usuarios", credencial.user.uid), {
+      nombre: nombre.trim(),
+      email: email.trim(),
+      mejorPuntaje: 0,
+      creadoEn: serverTimestamp(),
+    });
+    return credencial.user;
+  } catch (error) {
+    console.error("Error en registrarUsuario:", error.code, error.message);
+    throw error;
+  }
 }
-
 export function iniciarSesion(email, password) {
   return signInWithEmailAndPassword(auth, email.trim(), password);
 }
