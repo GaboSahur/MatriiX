@@ -7,6 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .categoria-grupo {
+      margin-bottom: 48px;
+    }
+
+    .categoria-titulo {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin: 0 0 20px;
+    }
+  </style>
 </head>
 <body data-page="catalogo" data-title-suffix="Niveles">
 
@@ -37,49 +51,7 @@
           <p>Cada nivel dura 60 segundos. La dificultad de los números se ajusta sola según tu desempeño dentro de la partida.</p>
         </div>
 
-        <div class="grid-3" style="margin-bottom:22px;">
-          <div class="level-card">
-            <div class="icon mono">+</div>
-            <h3>Sumas</h3>
-            <p>Ejercicios de suma con números de hasta dos cifras.</p>
-            <p class="difficulty"><span class="dot">●</span> Nivel inicial</p>
-            <a href="jugar.html?nivel=suma" class="btn btn-primary btn-block">Jugar</a>
-          </div>
-
-          <div class="level-card">
-            <div class="icon mono">−</div>
-            <h3>Restas</h3>
-            <p>Restas sin resultados negativos, ideales para entrar en calor.</p>
-            <p class="difficulty"><span class="dot">●</span> Nivel inicial</p>
-            <a href="jugar.html?nivel=resta" class="btn btn-primary btn-block">Jugar</a>
-          </div>
-
-          <div class="level-card">
-            <div class="icon mono">×</div>
-            <h3>Multiplicación</h3>
-            <p>Tablas y combinaciones para agilizar el cálculo mental.</p>
-            <p class="difficulty"><span class="dot">●●</span> Nivel intermedio</p>
-            <a href="jugar.html?nivel=multiplicacion" class="btn btn-primary btn-block">Jugar</a>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="level-card">
-            <div class="icon mono">÷</div>
-            <h3>División</h3>
-            <p>Divisiones exactas, pensadas como la operación inversa de multiplicar.</p>
-            <p class="difficulty"><span class="dot">●●</span> Nivel intermedio</p>
-            <a href="jugar.html?nivel=division" class="btn btn-primary btn-block">Jugar</a>
-          </div>
-
-          <div class="level-card">
-            <div class="icon mono">?</div>
-            <h3>Desafío mixto</h3>
-            <p>Las cuatro operaciones combinadas al azar, para quienes ya entraron en ritmo.</p>
-            <p class="difficulty"><span class="dot">●●●</span> Nivel avanzado</p>
-            <a href="jugar.html?nivel=mixto" class="btn btn-primary btn-block">Jugar</a>
-          </div>
-        </div>
+        <div id="catalogo-contenedor"></div>
       </div>
     </section>
   </main>
@@ -95,5 +67,65 @@
   <script src="js/common.js"></script>
   <script type="module" src="js/firebase-auth.js"></script>
   <script type="module" src="js/nav-session.js"></script>
+  <script type="module">
+    import { agruparPorCategoria } from "./js/content-library.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const contenedor = document.getElementById("catalogo-contenedor");
+      const agrupado = agruparPorCategoria();
+
+      Object.entries(agrupado).forEach(([categoria, niveles]) => {
+        const grupo = document.createElement("div");
+        grupo.className = "categoria-grupo";
+
+        const nombreCategoria = {
+          "operaciones-basicas": "Operaciones básicas",
+          "operaciones-avanzadas": "Operaciones avanzadas",
+          desafios: "Desafíos",
+        }[categoria] || categoria;
+
+        const titulo = document.createElement("h3");
+        titulo.className = "categoria-titulo";
+        titulo.textContent = nombreCategoria;
+        grupo.appendChild(titulo);
+
+        const columnas = Math.min(niveles.length, 3);
+        const grid = document.createElement("div");
+        grid.className = `grid-${columnas}`;
+        grid.style.display = "grid";
+        grid.style.gridTemplateColumns = `repeat(${columnas}, minmax(0, 1fr))`;
+        grid.style.gap = "20px";
+
+        niveles.forEach((nivel) => {
+          const card = document.createElement("div");
+          card.className = "level-card";
+
+          const nivelLabel =
+            nivel.dificultad === 1
+              ? "Nivel inicial"
+              : nivel.dificultad === 2
+              ? "Nivel intermedio"
+              : nivel.dificultad === 3
+              ? "Nivel avanzado"
+              : "Nivel experto";
+
+          const puntos = "●".repeat(nivel.dificultad);
+
+          card.innerHTML = `
+            <div class="icon mono">${nivel.emoji}</div>
+            <h3>${nivel.titulo}</h3>
+            <p>${nivel.descripcion}</p>
+            <p class="difficulty"><span class="dot">${puntos}</span> ${nivelLabel}</p>
+            <a href="jugar.html?nivel=${nivel.id}" class="btn btn-primary btn-block">Jugar</a>
+          `;
+
+          grid.appendChild(card);
+        });
+
+        grupo.appendChild(grid);
+        contenedor.appendChild(grupo);
+      });
+    });
+  </script>
 </body>
 </html>
