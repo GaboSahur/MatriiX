@@ -1,6 +1,5 @@
 /**
  * Genera ejercicios de fracciones simples.
- * Incluye suma y resta con denominadores iguales o compatibles.
  */
 
 function aleatorioEntre(min, max) {
@@ -56,7 +55,6 @@ export function generarEjercicioFracciones() {
     };
   }
 
-  // resta
   const denominador = a[1];
   const n1 = a[0] * b[1];
   const n2 = b[0] * denominador;
