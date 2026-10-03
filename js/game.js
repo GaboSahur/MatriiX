@@ -6,6 +6,9 @@
  */
 
 import { CONTENT_LIBRARY } from "./content-library.js";
+import { generarEjercicioFracciones } from "./generadores/fracciones.js";
+import { generarEjercicioDecimales } from "./generadores/decimales.js";
+import { generarEjercicioPorcentajes } from "./generadores/porcentajes.js";
 
 const DURACION_PARTIDA = 60;
 
@@ -293,10 +296,7 @@ function aleatorioEntre(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-import { generarEjercicioFracciones } from "./generadores/fracciones.js";
-import { generarEjercicioDecimales } from "./generadores/decimales.js";
-import { generarEjercicioPorcentajes } from "./generadores/porcentajes.js";
-
+// Generadores de ejercicios específicos por tema
 function generarEjercicioPorTema(tema) {
   switch (tema) {
     case "fracciones":
@@ -306,28 +306,45 @@ function generarEjercicioPorTema(tema) {
     case "porcentajes":
       return generarEjercicioPorcentajes();
     default:
-      return generarEjercicioFracciones();
+      return null;
   }
 }
 
-async function pedirPistaClaude(tema, problema, respuestaIncorrecta) {
+// Fallback de pistas cuando Claude no esté disponible
+function generarPistaFallback(operacion) {
+  const pistas = {
+    suma: "Pista: sumá de derecha a izquierda y llevá si hace falta.",
+    resta: "Pista: restá de derecha a izquierda. Si hace falta, pedí prestado.",
+    multiplicacion: "Pista: multiplicá cada parte y luego sumá los resultados.",
+    division: "Pista: pensá cuántas veces entra el divisor dentro del dividendo.",
+    fracciones: "Pista: busca un denominador común antes de sumar o restar.",
+    decimales: "Pista: alineá por la coma decimal y resolvé.",
+    porcentajes: "Pista: pensá como una proporción sobre 100.",
+  };
+  return pistas[operacion] || "Pensá bien antes de responder.";
+}
+
+// Pide pista a Claude con fallback
+async function pedirPistaClaude(tema, problema) {
   try {
     const respuesta = await fetch("http://localhost:3001/api/claude-hint", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         tema,
-        problema,
-        respuestaIncorrecta,
+        problema: `${problema.a} ${problema.simbolo} ${problema.b}`,
+        respuestaIncorrecta: "no especificada",
       }),
     });
 
+    if (!respuesta.ok) {
+      throw new Error("Claude no disponible");
+    }
+
     const data = await respuesta.json();
-    return data.pista || "Revisá el concepto y probá otra vez.";
+    return data.pista || generarPistaFallback(tema);
   } catch (error) {
-    console.error("Error al pedir pista:", error);
-    return "Revisá la idea principal y probá otra vez.";
+    console.warn("Claude no disponible, usando fallback:", error);
+    return generarPistaFallback(tema);
   }
 }
