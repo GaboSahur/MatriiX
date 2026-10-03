@@ -292,3 +292,42 @@ function guardarEnRanking() {
 function aleatorioEntre(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+import { generarEjercicioFracciones } from "./generadores/fracciones.js";
+import { generarEjercicioDecimales } from "./generadores/decimales.js";
+import { generarEjercicioPorcentajes } from "./generadores/porcentajes.js";
+
+function generarEjercicioPorTema(tema) {
+  switch (tema) {
+    case "fracciones":
+      return generarEjercicioFracciones();
+    case "decimales":
+      return generarEjercicioDecimales();
+    case "porcentajes":
+      return generarEjercicioPorcentajes();
+    default:
+      return generarEjercicioFracciones();
+  }
+}
+
+async function pedirPistaClaude(tema, problema, respuestaIncorrecta) {
+  try {
+    const respuesta = await fetch("http://localhost:3001/api/claude-hint", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tema,
+        problema,
+        respuestaIncorrecta,
+      }),
+    });
+
+    const data = await respuesta.json();
+    return data.pista || "Revisá el concepto y probá otra vez.";
+  } catch (error) {
+    console.error("Error al pedir pista:", error);
+    return "Revisá la idea principal y probá otra vez.";
+  }
+}
