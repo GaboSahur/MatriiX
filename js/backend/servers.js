@@ -11,8 +11,12 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+app.get("/health", (_req, res) => {
+  res.json({ ok: true, service: "numerax-claude" });
+});
+
 app.use("/api", claudeRouter);
 
 app.listen(PORT, () => {
-  console.log(`Servidor activo en http://localhost:${PORT}`);
+  console.log(`Servidor levantado en http://localhost:${PORT}`);
 });
