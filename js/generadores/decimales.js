@@ -1,5 +1,5 @@
 /**
- * Genera ejercicios de decimales: suma y resta con 1 o 2 decimales.
+ * Genera ejercicios de decimales.
  */
 
 function aleatorioEntre(min, max) {
