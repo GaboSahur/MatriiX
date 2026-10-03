@@ -1,8 +1,5 @@
 /**
- * Genera ejercicios de porcentajes simples.
- * Ejemplos:
- * - 20% de 80
- * - 25% de 100
+ * Genera ejercicios de porcentajes.
  */
 
 function aleatorioEntre(min, max) {
@@ -23,7 +20,7 @@ export function generarEjercicioPorcentajes() {
     enunciado: `¿Cuál es ${porcentaje}% de ${base}?`,
     respuesta: String(resultado),
     pista:
-      "Convierte el porcentaje en una fracción o divide por 10 y multiplica.",
+      "Multiplica el porcentaje por el número y divide entre 100. Ejemplo: 25% de 100 = (25 × 100) / 100 = 25.",
     datos: {
       porcentaje,
       base,
