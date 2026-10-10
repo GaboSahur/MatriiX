@@ -6,10 +6,9 @@
   <title>Dudas con IA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body data-page="chatbot" data-title-suffix="Dudas con IA">
-
   <header class="site-header">
     <div class="container nav">
       <a href="index.html" class="brand">
@@ -28,7 +27,6 @@
       <div class="nav-account" id="nav-cuenta"></div>
     </div>
   </header>
-
   <main>
     <section>
       <div class="container">
@@ -44,13 +42,11 @@
               <p>¡Hola! Soy tu tutor de matemática. Preguntame lo que quieras: una cuenta que no sale, un concepto que no se entiende o cómo resolver un problema.</p>
             </div>
           </div>
-
           <form class="chat-form" id="chat-form">
             <label for="chat-input" class="visually-hidden">Tu pregunta</label>
             <input type="text" id="chat-input" placeholder="Ej: ¿cómo se resuelve una división con coma?" autocomplete="off" maxlength="300" required />
             <button type="submit" class="btn btn-primary" id="chat-enviar">Enviar</button>
           </form>
-
           <p style="margin-top:12px; text-align:center;">
             <button type="button" class="btn btn-ghost" id="chat-reiniciar">Nueva consulta</button>
           </p>
@@ -66,10 +62,10 @@
     </div>
   </footer>
 
-  <script src="js/config.js"></script>
-  <script src="js/common.js"></script>
-  <script type="module" src="js/firebase-auth.js"></script>
-  <script type="module" src="js/nav-session.js"></script>
-  <script type="module" src="js/chatbot.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/nav-session.js"></script>
+  <script type="module" src="assets/js/chatbot.js"></script>
 </body>
 </html>
