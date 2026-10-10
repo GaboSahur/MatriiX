@@ -6,10 +6,9 @@
   <title>Jugar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body data-page="jugar" data-title-suffix="Jugar">
-
   <header class="site-header">
     <div class="container nav">
       <a href="index.html" class="brand">
@@ -28,7 +27,6 @@
       <div class="nav-account" id="nav-cuenta"></div>
     </div>
   </header>
-
   <main>
     <section>
       <div class="container">
@@ -37,7 +35,6 @@
           <h2>¡A resolver!</h2>
         </div>
 
-        <!-- Pantalla de juego -->
         <div class="game-shell" id="pantalla-juego">
           <div class="game-topbar">
             <span class="pill timer">⏱ <span id="timer">60s</span></span>
@@ -50,13 +47,7 @@
             <p class="expression" id="expresion">? + ?</p>
             <form id="form-respuesta" class="answer-form">
               <label for="input-respuesta" class="visually-hidden">Tu respuesta</label>
-              <input
-                type="number"
-                id="input-respuesta"
-                inputmode="numeric"
-                autocomplete="off"
-                required
-              />
+              <input type="number" id="input-respuesta" inputmode="numeric" autocomplete="off" required />
               <button type="submit" class="btn btn-primary">Responder</button>
             </form>
           </div>
@@ -69,7 +60,6 @@
           </div>
         </div>
 
-        <!-- Pantalla de resultado -->
         <div class="game-shell result-screen hidden" id="pantalla-resultado">
           <span class="eyebrow">Partida terminada</span>
           <p class="score-big"><span id="resultado-puntaje">0</span> pts</p>
@@ -94,13 +84,13 @@
     </div>
   </footer>
 
-  <script src="js/config.js"></script>
-  <script src="js/common.js"></script>
-  <script type="module" src="js/firebase-auth.js"></script>
-  <script type="module" src="js/nav-session.js"></script>
-  <script src="js/game.js"></script>
-  <script type="module" src="js/firebase-ranking.js"></script>
-  <script type="module" src="js/jugar-cloud.js"></script>
-  <script type="module" src="js/jugar-ia.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/nav-session.js"></script>
+  <script src="assets/js/game.js"></script>
+  <script type="module" src="assets/js/firebase-ranking.js"></script>
+  <script type="module" src="assets/js/jugar-cloud.js"></script>
+  <script type="module" src="assets/js/jugar-ia.js"></script>
 </body>
 </html>

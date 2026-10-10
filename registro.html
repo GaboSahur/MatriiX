@@ -6,10 +6,9 @@
   <title>Crear cuenta</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body data-page="registro" data-title-suffix="Crear cuenta">
-
   <header class="site-header">
     <div class="container nav">
       <a href="index.html" class="brand">
@@ -27,7 +26,6 @@
       <div class="nav-account" id="nav-cuenta"></div>
     </div>
   </header>
-
   <main>
     <section>
       <div class="container">
@@ -39,20 +37,17 @@
 
         <div class="form-card">
           <div class="alert alert-error" id="alerta-error" role="alert"></div>
-
           <form id="form-registro" novalidate>
             <div class="field">
               <label for="nombre">Nombre para el ranking</label>
               <input type="text" id="nombre" name="nombre" placeholder="¿Cómo te van a ver los demás?" autocomplete="name" />
               <span class="field-error">Ingresá al menos 2 caracteres.</span>
             </div>
-
             <div class="field">
               <label for="email">Correo electrónico</label>
               <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" />
               <span class="field-error">Ingresá un correo válido.</span>
             </div>
-
             <div class="field">
               <label for="password">Contraseña</label>
               <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
@@ -62,16 +57,13 @@
               <p class="password-hint" id="password-hint">Usá letras, números y algún símbolo para una contraseña más fuerte.</p>
               <span class="field-error">La contraseña debe tener al menos 6 caracteres.</span>
             </div>
-
             <div class="field">
               <label for="password-confirmar">Confirmar contraseña</label>
               <input type="password" id="password-confirmar" name="password-confirmar" placeholder="Repetí la contraseña" autocomplete="new-password" />
               <span class="field-error">Las contraseñas no coinciden.</span>
             </div>
-
             <button type="submit" class="btn btn-primary btn-block" id="btn-registrar">Crear cuenta</button>
           </form>
-
           <p style="margin-top:18px; text-align:center; font-size:0.9rem;">
             ¿Ya tenés cuenta? <a href="ingresar.html" style="color:var(--accent); font-weight:600;">Iniciá sesión</a>
           </p>
@@ -87,10 +79,10 @@
     </div>
   </footer>
 
-  <script src="js/config.js"></script>
-  <script src="js/common.js"></script>
-  <script type="module" src="js/firebase-auth.js"></script>
-  <script type="module" src="js/nav-session.js"></script>
-  <script type="module" src="js/registro.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/nav-session.js"></script>
+  <script type="module" src="assets/js/registro.js"></script>
 </body>
 </html>
