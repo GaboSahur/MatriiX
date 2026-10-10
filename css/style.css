@@ -430,6 +430,7 @@ table.ranking tr:last-child td { border-bottom: none; }
 .password-meter[data-fuerza="3"] span:nth-child(-n+3) { background: var(--success); }
 .password-hint { font-size: 0.78rem; color: var(--ink-faint); margin-top: 6px; }
 
+<<<<<<< HEAD
 /* ---------------- CHAT CON IA ---------------- */
 .chat-shell {
   max-width: 680px;
@@ -465,6 +466,8 @@ table.ranking tr:last-child td { border-bottom: none; }
 }
 .chat-form input:focus { outline: none; border-color: var(--accent); background: var(--surface); }
 
+=======
+>>>>>>> a0f6361f605dd6c590c5ee90d990654491e075a9
 .cloud-msg {
   text-align: center;
   font-family: var(--font-mono);

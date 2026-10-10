@@ -1,6 +1,7 @@
 /**
  * firebase-config.js
  * -----------------------------------------------------------
+<<<<<<< HEAD
  * Único lugar donde se inicializa Firebase. El resto de los
  * módulos (firebase-auth.js, firebase-ranking.js, firebase-ai.js)
  * importan `auth`, `db` y `ai` desde acá — así el proyecto entero
@@ -37,6 +38,14 @@ import {
   initializeAppCheck,
   ReCaptchaV3Provider,
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app-check.js";
+=======
+ * Único lugar donde se inicializa Firebase.
+ * -----------------------------------------------------------
+ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+>>>>>>> a0f6361f605dd6c590c5ee90d990654491e075a9
 
 const firebaseConfig = {
   apiKey: "AIzaSyAP-Zzb9_9cQCglwHS76Y-QhtcB1rgFjMY",
@@ -47,6 +56,7 @@ const firebaseConfig = {
   appId: "1:533802082287:web:ac5cadece071beec5d601a",
 };
 
+<<<<<<< HEAD
 // Clave pública de reCAPTCHA v3 que te da Firebase al activar
 // App Check (ver README → "Activar Firebase AI Logic"). Es una
 // clave de SITIO (site key), no un secreto: está diseñada para
@@ -80,3 +90,8 @@ export const ai = getAI(app, { backend: new GoogleAIBackend() });
  * acá para que firebase-ai.js no tenga que repetir esta config.
  */
 export const modeloTexto = getGenerativeModel(ai, { model: "gemini-2.0-flash" });
+=======
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+>>>>>>> a0f6361f605dd6c590c5ee90d990654491e075a9

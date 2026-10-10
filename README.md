@@ -1,16 +1,7 @@
-# NumeraX — Juego de matemática con ranking global (HTML + CSS + JS + Firebase)
-
-Sitio armado con **HTML, CSS y JavaScript puro** (módulos ES6 nativos, sin
-build step ni frameworks), pensado para el Proyecto Final Avanzado de
-Jóvenes creaTIvos. Cubre los entregables de la consigna:
-
-| Consigna | Dónde está |
-|---|---|
-| Página de inicio con marca propia | `index.html` |
-| Catálogo de productos/servicios | `catalogo.html` (catálogo de niveles del juego) |
-| Formulario de contacto real | `contacto.html` + `js/contacto.js` |
-| Panel de administrador con login | `login.html` + `admin.html` + `js/auth.js` |
 | Funcionalidad con IA personalizada | `js/game.js` → `adaptiveEngine` (dificultad adaptativa) + Gemini: `firebase-ai.js`, `jugar-ia.js`, `chatbot.html` |
+=======
+| Funcionalidad con IA personalizada | `js/game.js` → `adaptiveEngine` (dificultad adaptativa + tutor de pistas) |
+>>>>>>> a0f6361f605dd6c590c5ee90d990654491e075a9
 | **Registro y ranking de usuarios** | `registro.html`, `ingresar.html`, `ranking.html` + Firebase |
 
 ## Cómo probarlo
@@ -126,6 +117,7 @@ mathquest/
 ├── ingresar.html            Iniciar sesión de jugador
 ├── ranking.html              Ranking global (semanal/mensual/histórico)
 ├── chatbot.html              Chat de dudas con IA
+=======
 ├── login.html                 Ingreso al panel admin (demo, no relacionado a Firebase)
 ├── admin.html                  Panel: mensajes de contacto + historial local
 ├── css/style.css               Toda la identidad visual
@@ -146,6 +138,8 @@ mathquest/
     ├── firebase-ai.js              Gemini: pistas, ejercicios y chat
     ├── jugar-ia.js                 Puente juego <-> IA (eventos, timeouts, plan B)
     └── chatbot.js                  Interfaz del chat de dudas
+=======
+    └── jugar-cloud.js              Conecta el fin de partida con el ranking global
 ```
 
 ## Cómo funciona el ranking (modelo de datos)
@@ -210,6 +204,16 @@ con un timeout y siempre responde, con plan B si la IA falla. Si sacás
 La capa gratuita de Gemini tiene límites de consultas por minuto/día. Para un
 proyecto estudiantil alcanza de sobra, pero si un día se llena de usuarios
 puede cortar por un rato: por eso todo tiene plan B.
+=======
+## Sobre la "IA personalizada"
+
+`game.js` implementa un motor de **dificultad adaptativa basado en
+reglas** (sube el nivel tras 3 aciertos seguidos, lo baja tras 2 errores)
+y un tutor que genera pistas según el tipo de operación. No llama a
+ninguna API externa de IA — ver el comentario al principio de
+`js/game.js` para más detalle si querés conectar un modelo real más
+adelante.
+>>>>>>> a0f6361f605dd6c590c5ee90d990654491e075a9
 
 ## Login de administrador (demo, separado de las cuentas de jugador)
 
@@ -234,3 +238,5 @@ Firebase Authentication.
 4. Probar el registro/login, jugar una partida logueado, y confirmar que aparece en `ranking.html`.
 5. Activar Firebase AI Logic y pegar la `RECAPTCHA_SITE_KEY` (ver sección de IA).
 6. Subir todo a un repo de GitHub (mínimo 15 commits) y publicar con GitHub Pages.
+=======
+5. Subir todo a un repo de GitHub (mínimo 15 commits) y publicar con GitHub Pages.
